@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# use kdirstat-cache-writer to generate cache for a file system tree of interest
+# cache can be used for visualization or as input to secondary processes
+
+for dir in $@
+do
+  cache=`echo $dir | sed -e 's|/||' -e 's|/|-|g'`
+  cachefname=$cache.cache
+  echo $cachefname
+  time kdirstat-cache-writer -l $dir $cachefname
+  gzip -f $cachefname
+done
